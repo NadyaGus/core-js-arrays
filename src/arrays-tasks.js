@@ -335,10 +335,22 @@ function calculateBalance(arr) {
  *    createChunks(['a', 'b', 'c', 'd', 'e'], 2) => [['a', 'b'], ['c', 'd'], ['e']]
  *    createChunks([10, 20, 30, 40, 50], 1) => [[10], [20], [30], [40], [50]]
  */
-function createChunks(/* arr, chunkSize */) {
-  throw new Error('Not implemented');
-}
+function createChunks(arr, chunkSize) {
+  const copy = arr;
 
+  const result = copy.reduce((acc, elem, index) => {
+    if (index % chunkSize === 0) {
+      acc.push([]);
+      acc[acc.length - 1].push(elem);
+    } else {
+      const lastChunk = acc.length - 1;
+      acc[lastChunk].push(elem);
+    }
+    return acc;
+  }, []);
+
+  return result;
+}
 /**
  * Generates an array of odd numbers of the specified length.
  *
@@ -383,8 +395,10 @@ function getElementByIndices(/* arr, indices */) {
  *  getFalsyValuesCount([ -1, 'false', null, 0 ]) => 2
  *  getFalsyValuesCount([ null, undefined, NaN, false, 0, '' ]) => 6
  */
-function getFalsyValuesCount(/* arr */) {
-  throw new Error('Not implemented');
+function getFalsyValuesCount(arr) {
+  return arr.reduce((sum, value) => {
+    return Boolean(value) === false ? sum + 1 : sum + 0;
+  }, 0);
 }
 
 /**
